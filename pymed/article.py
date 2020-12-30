@@ -76,7 +76,7 @@ class PubMedArticle(object):
         return getContent(element=xml_element, path=path)
 
     def _extractConclusions(self: object, xml_element: TypeVar("Element")) -> str:
-        path = ".//AbstractText[@Label='CONCLUSION']"
+        path = ".//AbstractText[@Label='CONCLUSIONS']"
         return getContent(element=xml_element, path=path)
 
     def _extractMethods(self: object, xml_element: TypeVar("Element")) -> str:
