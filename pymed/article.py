@@ -32,6 +32,7 @@ class PubMedArticle(object):
         "aims",        
         "introduction",
         "objective",
+        "conclusion",        
         "discussion",        
     )
 
@@ -148,6 +149,10 @@ class PubMedArticle(object):
         path = ".//AbstractText[@Label='OBJECTIVE']"
         return getContent(element=xml_element, path=path)
 
+    def _extractConclusion(self: object, xml_element: TypeVar("Element")) -> str:
+        path = ".//AbstractText[@Label='CONCLUSION']"
+        return getContent(element=xml_element, path=path)
+    
     def _extractDiscussion(self: object, xml_element: TypeVar("Element")) -> str:
         path = ".//AbstractText[@Label='DISCUSSION']"
         return getContent(element=xml_element, path=path)
@@ -174,8 +179,9 @@ class PubMedArticle(object):
         self.purpose = self._extractPurpose(xml_element)
         self.aims = self._extractAims(xml_element)
         self.introduction = self._extractIntroduction(xml_element)
-        self.discussion = self._extractDiscussion(xml_element)
-        self.objective = self._extractObjective(xml_element)
+        self.objective = self._extractObjective(xml_element)      
+        self.conclusion = self._extractConclusion(xml_element)
+        self.discussion = self._extractDiscussion(xml_element)        
         
     def toDict(self: object) -> dict:
         """ Helper method to convert the parsed information to a Python dict.
