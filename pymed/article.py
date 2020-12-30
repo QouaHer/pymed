@@ -26,6 +26,10 @@ class PubMedArticle(object):
         "copyrights",
         "doi",
         "xml",
+        #new ones
+        "introduction",
+        "objective",
+        "discussion",        
     )
 
     def __init__(
@@ -121,6 +125,19 @@ class PubMedArticle(object):
             for author in xml_element.findall(".//Author")
         ]
 
+    
+    def _extractIntroduction(self: object, xml_element: TypeVar("Element")) -> str:
+        path = ".//AbstractText[@Label='INTRODUCTION']"
+        return getContent(element=xml_element, path=path)
+
+    def _extractObjective(self: object, xml_element: TypeVar("Element")) -> str:
+        path = ".//AbstractText[@Label='OBJECTIVE']"
+        return getContent(element=xml_element, path=path)
+
+    def _extractDiscussion(self: object, xml_element: TypeVar("Element")) -> str:
+        path = ".//AbstractText[@Label='DISCUSSION']"
+        return getContent(element=xml_element, path=path)
+    
     def _initializeFromXML(self: object, xml_element: TypeVar("Element")) -> None:
         """ Helper method that parses an XML element into an article object.
         """
@@ -139,7 +156,10 @@ class PubMedArticle(object):
         self.publication_date = self._extractPublicationDate(xml_element)
         self.authors = self._extractAuthors(xml_element)
         self.xml = xml_element
-
+        self.introduction = self._extractIntroduction(xml_element)
+        self.discussion = self._extractDiscussion(xml_element)
+        self.objective = self._extractObjective(xml_element)
+        
     def toDict(self: object) -> dict:
         """ Helper method to convert the parsed information to a Python dict.
         """
