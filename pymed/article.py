@@ -27,6 +27,9 @@ class PubMedArticle(object):
         "doi",
         "xml",
         #new ones
+        "background",
+        "purpose",
+        "aims",        
         "introduction",
         "objective",
         "discussion",        
@@ -125,6 +128,17 @@ class PubMedArticle(object):
             for author in xml_element.findall(".//Author")
         ]
 
+    def _extractBackground(self: object, xml_element: TypeVar("Element")) -> str:
+        path = ".//AbstractText[@Label='BACKGROUND']"
+        return getContent(element=xml_element, path=path)
+    
+    def _extractPurpose(self: object, xml_element: TypeVar("Element")) -> str:
+        path = ".//AbstractText[@Label='PURPOSE']"
+        return getContent(element=xml_element, path=path)
+
+    def _extractAims(self: object, xml_element: TypeVar("Element")) -> str:
+        path = ".//AbstractText[@Label='AIMS']"
+        return getContent(element=xml_element, path=path)
     
     def _extractIntroduction(self: object, xml_element: TypeVar("Element")) -> str:
         path = ".//AbstractText[@Label='INTRODUCTION']"
@@ -156,6 +170,9 @@ class PubMedArticle(object):
         self.publication_date = self._extractPublicationDate(xml_element)
         self.authors = self._extractAuthors(xml_element)
         self.xml = xml_element
+        self.background = self._extractBackground(xml_element) 
+        self.purpose = self._extractPurpose(xml_element)
+        self.aims = self._extractAims(xml_element)
         self.introduction = self._extractIntroduction(xml_element)
         self.discussion = self._extractDiscussion(xml_element)
         self.objective = self._extractObjective(xml_element)
