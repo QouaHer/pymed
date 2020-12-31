@@ -32,7 +32,8 @@ class PubMedArticle(object):
         "aims",        
         "introduction",
         "objective",
-        "objectivesandmethods",        
+        "objectivesandmethods",  
+        "materialsandmethods",        
         "conclusion",        
         "discussion",        
     )
@@ -154,6 +155,10 @@ class PubMedArticle(object):
         path = ".//AbstractText[@Label='OBJECTIVES AND METHODS']"
         return getContent(element=xml_element, path=path)
     
+    def _extractMaterialsAndMethods(self: object, xml_element: TypeVar("Element")) -> str:
+        path = ".//AbstractText[@Label='MATERIALS AND METHODS']"
+        return getContent(element=xml_element, path=path)
+    
     def _extractConclusion(self: object, xml_element: TypeVar("Element")) -> str:
         path = ".//AbstractText[@Label='CONCLUSION']"
         return getContent(element=xml_element, path=path)
@@ -185,7 +190,8 @@ class PubMedArticle(object):
         self.aims = self._extractAims(xml_element)
         self.introduction = self._extractIntroduction(xml_element)
         self.objective = self._extractObjective(xml_element)      
-        self.objectivesandmethods = self._extractObjectivesAndMethods(xml_element)              
+        self.objectivesandmethods = self._extractObjectivesAndMethods(xml_element)
+        self.materialsandmethods = self._extractMaterialsAndMethods(xml_element)         
         self.conclusion = self._extractConclusion(xml_element)
         self.discussion = self._extractDiscussion(xml_element)        
         
